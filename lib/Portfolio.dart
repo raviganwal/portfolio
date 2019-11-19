@@ -64,6 +64,7 @@ class _PortfolioState extends State<Portfolio> {
                                     backgroundImage: AssetImage(
                                         "assets/images/background.jpg"),
                                   ),
+                                  Text(Lang.fName)
                                 ],
                               ),
                             )
