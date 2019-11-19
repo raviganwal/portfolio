@@ -45,17 +45,28 @@ class _PortfolioState extends State<Portfolio> {
                       collapseMode: CollapseMode.parallax,
                       background: Container(
                         child: Stack(
+                          fit: StackFit.expand,
                           children: <Widget>[
                             Image.asset(
                               'assets/images/background.jpg',
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
                               colorBlendMode: BlendMode.darken,
-                              fit: MediaQuery.of(context).orientation ==
-                                      Orientation.portrait
-                                  ? BoxFit.cover
-                                  : BoxFit.fill,
+                              fit: BoxFit.fill,
                             ),
+                            Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    radius: 50.0,
+                                    backgroundImage: AssetImage(
+                                        "assets/images/background.jpg"),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),
