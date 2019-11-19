@@ -11,78 +11,36 @@ class _PortfolioState extends State<Portfolio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                  bottom: PreferredSize(
-                    child: Container(
-                      color: Theme.of(context).primaryColor,
-                      child: TabBar(
-                        isScrollable: false,
-                        tabs: [
-                          Tab(text: "Selling"),
-                          Tab(text: "Buying"),
-                        ],
-                      ),
-                    ),
-                    preferredSize: Size(MediaQuery.of(context).size.width, 56),
-                  ),
-                  elevation: 0,
-                  expandedHeight:
-                      MediaQuery.of(context).orientation == Orientation.portrait
-                          ? 470.0
-                          : 250,
-                  floating: false,
-                  centerTitle: true,
-                  pinned: true,
-                  title: Text(Lang.appBarTitle),
-                  flexibleSpace: LayoutBuilder(builder:
-                      (BuildContext context, BoxConstraints constraints) {
-                    return FlexibleSpaceBar(
-                      collapseMode: CollapseMode.parallax,
-                      background: Container(
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/images/background.jpg',
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              colorBlendMode: BlendMode.darken,
-                              fit: BoxFit.fill,
-                            ),
-                            Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    radius: 50.0,
-                                    backgroundImage: AssetImage(
-                                        "assets/images/background.jpg"),
-                                  ),
-                                  Text(Lang.fName)
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  })),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              Center(
-                child: Text('abc'),
-              ),
-              Center(
-                child: Text('abc'),
-              ),
+      appBar: AppBar(title: Text(Lang.appBarTitle),
+        centerTitle: true,),
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[ CircleAvatar(
+              radius: 80.0,
+              backgroundImage: NetworkImage(
+                  'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
+            ),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              Text(Lang.fName + ' ' + Lang.lName, style: Theme
+                  .of(context)
+                  .textTheme
+                  .title,),
+              Padding(padding: EdgeInsets.only(top: 8)),
+              Text(Lang.designation, style: Theme
+                  .of(context)
+                  .textTheme
+                  .subtitle,),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              Text(Lang.contactMe, style: Theme
+                  .of(context)
+                  .textTheme
+                  .title
+                  .copyWith(fontStyle: FontStyle.italic,letterSpacing: 1.0),textAlign: TextAlign.center,),
+
             ],
           ),
         ),
