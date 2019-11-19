@@ -1,6 +1,6 @@
 # Portfolio
 
-A new Flutter application.
+Open Source Portfolio flutter app.
 
 ## Getting Started
 
