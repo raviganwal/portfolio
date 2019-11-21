@@ -3,5 +3,7 @@ class Lang {
   static String fName = "Ravinder";
   static String lName = "Kumar";
   static String designation = "Sr Flutter Developer | Android Developer";
-  static String contactMe = "Do you want to create a flutter web or mobile app please contact me on\nwhatsapp +91 8962328415";
+  static String contactMe1 = "Do you want to create";
+  static String contactMe2 = "Flutter web or mobile app | Native android | Native ios | php | codeigniter | Laravel";
+  static String contactMe3 = " Contact";
 }
