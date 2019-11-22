@@ -19,7 +19,7 @@ void main() {
 
   ThemeData _buildLightTheme() {
     const Color primaryColor = Colors.teal;
-    const Color secondaryColor = Colors.blueGrey;
+    const Color secondaryColor = Colors.purple;
 
     final ColorScheme colorScheme = const ColorScheme.light().copyWith(
       primary: primaryColor,
@@ -30,7 +30,7 @@ void main() {
         accentColorBrightness: Brightness.dark,
         primaryColor: primaryColor,
         colorScheme: colorScheme,
-        iconTheme: IconThemeData(color: secondaryColor));
+        iconTheme: IconThemeData(color: Colors.teal));
     return base;
   }
 
