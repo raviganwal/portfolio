@@ -13,7 +13,7 @@ class Portfolio extends StatefulWidget {
 }
 
 class _PortfolioState extends State<Portfolio> {
-  static String projects = " https://raviganwal.github.io/project.json";
+  static String projects = "https://raviganwal.github.io/project.json";
   List<ProjectModel> mList;
 
   @override
@@ -127,7 +127,7 @@ class _PortfolioState extends State<Portfolio> {
                         itemBuilder: (context, int) {
                           ProjectModel model = mList[int];
                           return ListTile(
-                            title: Text('${model.title}'),
+                            title: Text('${model.title}dfsdf'),
                           );
                         },
                       )
@@ -149,12 +149,11 @@ class _PortfolioState extends State<Portfolio> {
 //  }
 
   void getProjects() async {
-    print('dataConvertedToJSON');
     NetworkRepository().getRequest(projects).then((onValue) {
       var dataConvertedToJSON = json.decode(onValue);
       print(dataConvertedToJSON);
-      ProjectModel model = ProjectModel.fromJson(dataConvertedToJSON);
       setState(() {
+        ProjectModel model = ProjectModel.fromJson(dataConvertedToJSON);
         mList.add(model);
       });
     });
