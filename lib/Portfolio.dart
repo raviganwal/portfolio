@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'AndroidProjectModel.dart';
 import 'Lang.dart';
+import 'ProjectModel.dart';
 
 class Portfolio extends StatefulWidget {
   @override
@@ -15,7 +15,9 @@ class Portfolio extends StatefulWidget {
 
 class _PortfolioState extends State<Portfolio> {
   static String projects = "https://raviganwal.github.io/project.json";
-  List<Data> mList = List();
+  List<Project> mListAndroid = List();
+  List<Project> mListIos = List();
+  List<Project> mListPhp = List();
 
   @override
   void initState() {
@@ -30,13 +32,21 @@ class _PortfolioState extends State<Portfolio> {
         .size
         .width;
     return Scaffold(
-      appBar: AppBar(title: Text(Lang.appBarTitle),
-        centerTitle: true,),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-//            Image.asset('assets/images/back.jpg', fit: BoxFit.cover,),
-            Container(
+      appBar: AppBar(
+        title: Text("Portfolio app - Made with flutter"),
+        centerTitle: true,
+      ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/images/back.jpg',
+                fit: BoxFit.cover,
+              )),
+          SingleChildScrollView(
+            child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
 //              decoration: BoxDecoration(
@@ -54,27 +64,39 @@ class _PortfolioState extends State<Portfolio> {
                         'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
                   ),
                   Padding(padding: EdgeInsets.only(top: 16)),
-                  Text(Lang.fName + ' ' + Lang.lName, style: Theme
-                      .of(context)
-                      .textTheme
-                      .title,),
+                  Text(
+                    Lang.fName + ' ' + Lang.lName,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .title,
+                  ),
                   Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(Lang.designation, style: Theme
-                      .of(context)
-                      .textTheme
-                      .subtitle,),
+                  Text(
+                    Lang.designation,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle,
+                  ),
                   Padding(padding: EdgeInsets.only(top: 16)),
-                  Text(Lang.contactMe1, style: Theme
-                      .of(context)
-                      .textTheme
-                      .subtitle
-                    , textAlign: TextAlign.center,),
+                  Text(
+                    Lang.contactMe1,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle,
+                    textAlign: TextAlign.center,
+                  ),
                   Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(Lang.contactMe2, style: Theme
-                      .of(context)
-                      .textTheme
-                      .title,
-                    textAlign: TextAlign.center,),
+                  Text(
+                    Lang.contactMe2,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .title,
+                    textAlign: TextAlign.center,
+                  ),
                   Padding(padding: EdgeInsets.only(top: 16)),
 //              Text(Lang.contactMe3, style: Theme
 //                  .of(context)
@@ -103,10 +125,13 @@ class _PortfolioState extends State<Portfolio> {
                     children: <Widget>[
                       Icon(FontAwesomeIcons.whatsapp),
                       Padding(padding: EdgeInsets.only(left: 8)),
-                      SelectableText('+91-8962328415', style: Theme
-                          .of(context)
-                          .textTheme
-                          .title,)
+                      SelectableText(
+                        '+91-8962328415',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .title,
+                      )
                     ],
                   ),
                   Padding(padding: EdgeInsets.symmetric(vertical: 8)),
@@ -116,54 +141,66 @@ class _PortfolioState extends State<Portfolio> {
                       Icon(FontAwesomeIcons.google),
                       Padding(padding: EdgeInsets.only(left: 8)),
                       SelectableText(
-                        'raviganwal1992@gmail.com', style: Theme
-                          .of(context)
-                          .textTheme
-                          .title,)
+                        'raviganwal1992@gmail.com',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .title,
+                      )
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      IconButton(icon: Icon(FontAwesomeIcons.stackOverflow),
+                      IconButton(
+                          icon: Icon(FontAwesomeIcons.stackOverflow),
                           onPressed: () {
-                            _launchURL(
-                                'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile');
+                            _launchURL(Lang.stackoverflow);
                           }),
-                      Container(height: 16,
+                      Container(
+                        height: 16,
                         width: 1,
                         color: Colors.grey,
-                        padding: EdgeInsets.symmetric(horizontal: 16),),
-                      IconButton(icon: Icon(FontAwesomeIcons.github),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                      IconButton(
+                          icon: Icon(FontAwesomeIcons.github),
                           onPressed: () {}),
-                    ],),
-                  if(mList != null)
-                    GridView.count(
-                        shrinkWrap: true,
-                        // Create a grid with 2 columns. If you change the scrollDirection to
-                        // horizontal, this produces 2 rows.
-                        crossAxisCount
-                            : calcSize(width),
-                        // Generate 100 widgets that display their index in the List.
-                        children: <Widget>[
-                          android(),
-                        ]),
+                    ],
+                  ),
+                  if (mListAndroid != null)
+                    Column(
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.all(16)),
+                        android(),
+                        Divider(color: Colors.white54,
+                          thickness: 2,
+                          endIndent: 16,
+                          indent: 16,
+                          height: 100,),
+                        ios(),
+                        Divider(color: Colors.white54,
+                            thickness: 2,
+                            endIndent: 16,
+                            indent: 16, height: 100),
+                        php()],
+                    )
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   int calcSize(double width) {
-    if (width < 700)
-      return 1;
-    else if (width > 700 && width < 1100)
-      return 2;
-    else
-      return 3;
+//    if (width < 700)
+//      return 1;
+//    else if (width > 700 && width < 1100)
+//      return 2;
+//    else
+    return 1;
   }
 
   _launchURL(String url) async {
@@ -178,11 +215,12 @@ class _PortfolioState extends State<Portfolio> {
     NetworkRepository().getRequest(projects).then((onValue) {
       var dataConvertedToJSON = json.decode(onValue);
       setState(() {
-        AndroidProjectModel model = AndroidProjectModel.fromJson(
-            dataConvertedToJSON);
+        ProjectModel model = ProjectModel.fromJson(dataConvertedToJSON);
 //        print(model);
-        mList.addAll(model.data);
-        for (var model in mList) {
+        mListAndroid.addAll(model.androidProject);
+        mListIos.addAll(model.iosProject);
+        mListPhp.addAll(model.phpProject);
+        for (var model in mListAndroid) {
           print(model.title);
         }
       });
@@ -198,34 +236,151 @@ class _PortfolioState extends State<Portfolio> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Icon(Icons.android),
-              Text(Lang.androidProject, style: Theme
-                  .of(context)
-                  .textTheme
-                  .title,),
+              Icon(Icons.android,size: 35,),
+              Padding(padding: EdgeInsets.only(left: 8)),
+              Text(
+                Lang.androidProject,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .display1,
+              ),
             ],
           ),
           Padding(padding: EdgeInsets.only(top: 8)),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: mList.length,
+            itemCount: mListAndroid.length,
             itemBuilder: (context, int) {
-              Data model = mList[int];
+              Project model = mListAndroid[int];
               return Card(
-                child: ListTile(
-                  onTap: () {
-                    _launchURL(model.url);
-                  },
-                  leading: FadeInImage.assetNetwork(
-                    height: 100,
-                    width: 100,
-                    placeholder: 'assets/images/loading.gif',
-                    image: '${model.logo}',
+                  child: InkWell(
+                    onTap: () {},
+                    child: Row(
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        FadeInImage.assetNetwork(
+                          height: 100,
+                          width: 100,
+                          placeholder: 'assets/images/loading.gif',
+                          image: '${model.logo}',
+                        ),
+                        Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '${model.title}',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .title,
+                                ),
+                                Text('${model.url}',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle),
+                              ],
+                            )),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Icon(FontAwesomeIcons.googlePlay),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+
+//                    ListTile(
+//                      onTap: () {
+//                        _launchURL(model.url);
+//                      },
+//                      leading: ,
+//                      title: ,
+//                      subtitle: Text('${model.url}'),
+//                      trailing: ,
+//                    ),
+                      ],
+                    ),
+                  ));
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget ios() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.phone_iphone,size: 35,),
+              Padding(padding: EdgeInsets.only(left: 8)),
+              Text(
+                Lang.iosProject,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .display1,
+              ),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(top: 8)),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: mListIos.length,
+            itemBuilder: (context, int) {
+              Project model = mListIos[int];
+              return Card(
+                child: InkWell(
+                  onTap: () {},
+                  child: Row(
+                    children: <Widget>[
+                      FadeInImage.assetNetwork(
+                        height: 100,
+                        width: 100,
+                        placeholder: 'assets/images/loading.gif',
+                        image: '${model.logo}',
+                      ),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                      Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                '${model.title}',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .title,
+                              ),
+                              Text('${model.url}',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .subtitle),
+                            ],
+                          )),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                      Icon(FontAwesomeIcons.googlePlay),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+
+//                    ListTile(
+//                      onTap: () {
+//                        _launchURL(model.url);
+//                      },
+//                      leading: ,
+//                      title: ,
+//                      subtitle: Text('${model.url}'),
+//                      trailing: ,
+//                    ),
+                    ],
                   ),
-                  title: Text('${model.title}'),
-                  subtitle: Text('${model.url}'),
-                  trailing: Icon(FontAwesomeIcons.googlePlay),
                 ),
               );
             },
@@ -234,6 +389,88 @@ class _PortfolioState extends State<Portfolio> {
       ),
     );
   }
+
+  Widget php() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.web,size: 35,),
+              Padding(padding: EdgeInsets.only(left: 8)),
+              Text(
+                Lang.web,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .display1,
+              ),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(top: 8)),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: mListPhp.length,
+            itemBuilder: (context, int) {
+              Project model = mListPhp[int];
+              return Card(
+                  child: InkWell(
+                    onTap: () {},
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: FadeInImage.assetNetwork(
+                            height: 100,
+                            width: 100,
+                            placeholder: 'assets/images/loading.gif',
+                            image: '${model.logo}',
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '${model.title}',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .title,
+                                ),
+                                Text('${model.url}',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .subtitle),
+                              ],
+                            )),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Icon(FontAwesomeIcons.googlePlay),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+
+//                    ListTile(
+//                      onTap: () {
+//                        _launchURL(model.url);
+//                      },
+//                      leading: ,
+//                      title: ,
+//                      subtitle: Text('${model.url}'),
+//                      trailing: ,
+//                    ),
+                      ],
+                    ),
+                  )
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
 }
-
-

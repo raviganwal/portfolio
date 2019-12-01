@@ -6,5 +6,9 @@ class Lang {
   static String contactMe1 = "Do you want to create";
   static String contactMe2 = "Flutter web or mobile app | Native android | Native ios | php | codeigniter | Laravel";
   static String contactMe3 = " Contact";
-  static String androidProject = " Android Project";
+  static String androidProject = "Android apps";
+  static String iosProject = "IOS apps";
+  static String web = "Website app";
+  static String stackoverflow = "https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile";
+  static String github = "https://github.com/raviganwal";
 }
