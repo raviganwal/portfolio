@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'dart:js' as js;
 
 import 'package:aboutme/NetworkRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'Lang.dart';
 import 'ProjectModel.dart';
@@ -27,10 +27,7 @@ class _PortfolioState extends State<Portfolio> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Portfolio app - Made with flutter"),
@@ -66,35 +63,23 @@ class _PortfolioState extends State<Portfolio> {
                   Padding(padding: EdgeInsets.only(top: 16)),
                   Text(
                     Lang.fName + ' ' + Lang.lName,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .title,
+                    style: Theme.of(context).textTheme.title,
                   ),
                   Padding(padding: EdgeInsets.only(top: 8)),
                   Text(
                     Lang.designation,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle,
+                    style: Theme.of(context).textTheme.subtitle,
                   ),
                   Padding(padding: EdgeInsets.only(top: 16)),
                   Text(
                     Lang.contactMe1,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle,
+                    style: Theme.of(context).textTheme.subtitle,
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(top: 8)),
                   Text(
                     Lang.contactMe2,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .title,
+                    style: Theme.of(context).textTheme.title,
                     textAlign: TextAlign.center,
                   ),
                   Padding(padding: EdgeInsets.only(top: 16)),
@@ -127,10 +112,7 @@ class _PortfolioState extends State<Portfolio> {
                       Padding(padding: EdgeInsets.only(left: 8)),
                       SelectableText(
                         '+91-8962328415',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .title,
+                        style: Theme.of(context).textTheme.title,
                       )
                     ],
                   ),
@@ -142,10 +124,7 @@ class _PortfolioState extends State<Portfolio> {
                       Padding(padding: EdgeInsets.only(left: 8)),
                       SelectableText(
                         'raviganwal1992@gmail.com',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .title,
+                        style: Theme.of(context).textTheme.title,
                       )
                     ],
                   ),
@@ -155,7 +134,9 @@ class _PortfolioState extends State<Portfolio> {
                       IconButton(
                           icon: Icon(FontAwesomeIcons.stackOverflow),
                           onPressed: () {
-                            _launchURL(Lang.stackoverflow);
+                            js.context.callMethod("open", [
+                              'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile'
+                            ]);
                           }),
                       Container(
                         height: 16,
@@ -165,7 +146,10 @@ class _PortfolioState extends State<Portfolio> {
                       ),
                       IconButton(
                           icon: Icon(FontAwesomeIcons.github),
-                          onPressed: () {}),
+                          onPressed: () {
+                            js.context.callMethod(
+                                "open", ['https://raviganwal.github.io/']);
+                          }),
                     ],
                   ),
                   if (mListAndroid != null)
@@ -173,17 +157,22 @@ class _PortfolioState extends State<Portfolio> {
                       children: <Widget>[
                         Padding(padding: EdgeInsets.all(16)),
                         android(),
-                        Divider(color: Colors.white54,
+                        Divider(
+                          color: Colors.white54,
                           thickness: 2,
                           endIndent: 16,
                           indent: 16,
-                          height: 100,),
+                          height: 100,
+                        ),
                         ios(),
-                        Divider(color: Colors.white54,
+                        Divider(
+                            color: Colors.white54,
                             thickness: 2,
                             endIndent: 16,
-                            indent: 16, height: 100),
-                        php()],
+                            indent: 16,
+                            height: 100),
+                        php()
+                      ],
                     )
                 ],
               ),
@@ -201,14 +190,6 @@ class _PortfolioState extends State<Portfolio> {
 //      return 2;
 //    else
     return 1;
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   Future<String> getProjects() async {
@@ -238,14 +219,14 @@ class _PortfolioState extends State<Portfolio> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Icon(Icons.android,size: 35,),
+              Icon(
+                Icons.android,
+                size: 35,
+              ),
               Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.androidProject,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .display1,
+                style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
@@ -257,38 +238,34 @@ class _PortfolioState extends State<Portfolio> {
               Project model = mListAndroid[int];
               return Card(
                   child: InkWell(
-                    onTap: () {},
-                    child: Row(
+                onTap: () {
+                  js.context.callMethod("open", [model.url]);
+                },
+                child: Row(
+                  children: <Widget>[
+                    FadeInImage.assetNetwork(
+                      height: 100,
+                      width: 100,
+                      placeholder: 'assets/images/loading.gif',
+                      image: '${model.logo}',
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                    Expanded(
+                        child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                        FadeInImage.assetNetwork(
-                          height: 100,
-                          width: 100,
-                          placeholder: 'assets/images/loading.gif',
-                          image: '${model.logo}',
+                        Text(
+                          '${model.title}',
+                          style: Theme.of(context).textTheme.title,
                         ),
-                        Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '${model.title}',
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .title,
-                                ),
-                                Text('${model.url}',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .subtitle),
-                              ],
-                            )),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                        Icon(FontAwesomeIcons.googlePlay),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Text('${model.url}',
+                            style: Theme.of(context).textTheme.subtitle),
+                      ],
+                    )),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                    Icon(FontAwesomeIcons.googlePlay),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
 
 //                    ListTile(
 //                      onTap: () {
@@ -299,9 +276,9 @@ class _PortfolioState extends State<Portfolio> {
 //                      subtitle: Text('${model.url}'),
 //                      trailing: ,
 //                    ),
-                      ],
-                    ),
-                  ));
+                  ],
+                ),
+              ));
             },
           )
         ],
@@ -318,14 +295,14 @@ class _PortfolioState extends State<Portfolio> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.phone_iphone,size: 35,),
+              Icon(
+                Icons.phone_iphone,
+                size: 35,
+              ),
               Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.iosProject,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .display1,
+                style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
@@ -337,7 +314,9 @@ class _PortfolioState extends State<Portfolio> {
               Project model = mListIos[int];
               return Card(
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    js.context.callMethod("open", [model.url]);
+                  },
                   child: Row(
                     children: <Widget>[
                       FadeInImage.assetNetwork(
@@ -349,23 +328,17 @@ class _PortfolioState extends State<Portfolio> {
                       Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
                       Expanded(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                '${model.title}',
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .title,
-                              ),
-                              Text('${model.url}',
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .subtitle),
-                            ],
-                          )),
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${model.title}',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                          Text('${model.url}',
+                              style: Theme.of(context).textTheme.subtitle),
+                        ],
+                      )),
                       Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
                       Icon(FontAwesomeIcons.googlePlay),
                       Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
@@ -399,14 +372,14 @@ class _PortfolioState extends State<Portfolio> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.web,size: 35,),
+              Icon(
+                Icons.web,
+                size: 35,
+              ),
               Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.web,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .display1,
+                style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
@@ -418,41 +391,37 @@ class _PortfolioState extends State<Portfolio> {
               Project model = mListPhp[int];
               return Card(
                   child: InkWell(
-                    onTap: () {},
-                    child: Row(
+                onTap: () {
+                  js.context.callMethod("open", [model.url]);
+                },
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FadeInImage.assetNetwork(
+                        height: 100,
+                        width: 100,
+                        placeholder: 'assets/images/loading.gif',
+                        image: '${model.logo}',
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                    Expanded(
+                        child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: FadeInImage.assetNetwork(
-                            height: 100,
-                            width: 100,
-                            placeholder: 'assets/images/loading.gif',
-                            image: '${model.logo}',
-                          ),
+                        Text(
+                          '${model.title}',
+                          style: Theme.of(context).textTheme.title,
                         ),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                        Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '${model.title}',
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .title,
-                                ),
-                                Text('${model.url}',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .subtitle),
-                              ],
-                            )),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                        Icon(FontAwesomeIcons.googlePlay),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Text('${model.url}',
+                            style: Theme.of(context).textTheme.subtitle),
+                      ],
+                    )),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                    Icon(FontAwesomeIcons.googlePlay),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
 
 //                    ListTile(
 //                      onTap: () {
@@ -463,10 +432,9 @@ class _PortfolioState extends State<Portfolio> {
 //                      subtitle: Text('${model.url}'),
 //                      trailing: ,
 //                    ),
-                      ],
-                    ),
-                  )
-              );
+                  ],
+                ),
+              ));
             },
           )
         ],
