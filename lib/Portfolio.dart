@@ -33,56 +33,79 @@ class _PortfolioState extends State<Portfolio> {
         title: Text("Portfolio app - Made with flutter"),
         centerTitle: true,
       ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Image.asset(
-                'assets/images/back.jpg',
-                fit: BoxFit.cover,
-              )),
-          SingleChildScrollView(
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      body: Container(
+        width: width,
+        child: Stack(
+          children: <Widget>[
+            Container(
+                height: double.infinity,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/images/back.jpg',
+                  fit: BoxFit.cover,
+                )),
+            SingleChildScrollView(
+              child: Center(
+                child: Container(
+                  decoration: new BoxDecoration(
+                    gradient: new LinearGradient(
+                      colors: [Colors.black12, Colors.black26],
+                      tileMode: TileMode.clamp,
+                    ),
+
+                  ),
+                  width: 1170,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
 //              decoration: BoxDecoration(
 //                  image: DecorationImage(
 //                    image: AssetImage(
 //                        'assets/images/background.jpg'),
 //                    fit: BoxFit.fill,
 //                  )),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 70.0,
-                    backgroundImage: NetworkImage(
-                        'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 16)),
-                  Text(
-                    Lang.fName + ' ' + Lang.lName,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(
-                    Lang.designation,
-                    style: Theme.of(context).textTheme.subtitle,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 16)),
-                  Text(
-                    Lang.contactMe1,
-                    style: Theme.of(context).textTheme.subtitle,
-                    textAlign: TextAlign.center,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(
-                    Lang.contactMe2,
-                    style: Theme.of(context).textTheme.title,
-                    textAlign: TextAlign.center,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 16)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 60.0,
+                        backgroundImage: NetworkImage(
+                            'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 16)),
+                      Text(
+                        Lang.fName + ' ' + Lang.lName,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .title,
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Text(
+                        Lang.designation,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .subtitle,
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 16)),
+                      Text(
+                        Lang.contactMe1,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .subtitle,
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      Text(
+                        Lang.contactMe2,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .title,
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(padding: EdgeInsets.only(top: 16)),
 //              Text(Lang.contactMe3, style: Theme
 //                  .of(context)
 //                  .textTheme
@@ -105,80 +128,88 @@ class _PortfolioState extends State<Portfolio> {
 //                ),
 //              )
 //                  Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.whatsapp),
-                      Padding(padding: EdgeInsets.only(left: 8)),
-                      SelectableText(
-                        '+91-8962328415',
-                        style: Theme.of(context).textTheme.title,
-                      )
-                    ],
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.google),
-                      Padding(padding: EdgeInsets.only(left: 8)),
-                      SelectableText(
-                        'raviganwal1992@gmail.com',
-                        style: Theme.of(context).textTheme.title,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                          icon: Icon(FontAwesomeIcons.stackOverflow),
-                          onPressed: () {
-                            js.context.callMethod("open", [
-                              'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile'
-                            ]);
-                          }),
-                      Container(
-                        height: 16,
-                        width: 1,
-                        color: Colors.grey,
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.whatsapp),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          SelectableText(
+                            '+91-8962328415',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .title,
+                          )
+                        ],
                       ),
-                      IconButton(
-                          icon: Icon(FontAwesomeIcons.github),
-                          onPressed: () {
-                            js.context.callMethod(
-                                "open", ['https://raviganwal.github.io/']);
-                          }),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.google),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          SelectableText(
+                            'raviganwal1992@gmail.com',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .title,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                              icon: Icon(FontAwesomeIcons.stackOverflow),
+                              onPressed: () {
+                                js.context.callMethod("open", [
+                                  'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile'
+                                ]);
+                              }),
+                          Container(
+                            height: 16,
+                            width: 1,
+                            color: Colors.grey,
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                          IconButton(
+                              icon: Icon(FontAwesomeIcons.github),
+                              onPressed: () {
+                                js.context.callMethod(
+                                    "open", ['https://github.com/raviganwal']);
+                              }),
+                        ],
+                      ),
+                      if (mListAndroid != null)
+                        Column(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.all(16)),
+                            android(),
+                            Divider(
+                              color: Colors.white54,
+                              thickness: 2,
+                              endIndent: 16,
+                              indent: 16,
+                              height: 100,
+                            ),
+                            ios(),
+                            Divider(
+                                color: Colors.white54,
+                                thickness: 2,
+                                endIndent: 16,
+                                indent: 16,
+                                height: 100),
+                            php()
+                          ],
+                        )
                     ],
                   ),
-                  if (mListAndroid != null)
-                    Column(
-                      children: <Widget>[
-                        Padding(padding: EdgeInsets.all(16)),
-                        android(),
-                        Divider(
-                          color: Colors.white54,
-                          thickness: 2,
-                          endIndent: 16,
-                          indent: 16,
-                          height: 100,
-                        ),
-                        ios(),
-                        Divider(
-                            color: Colors.white54,
-                            thickness: 2,
-                            endIndent: 16,
-                            indent: 16,
-                            height: 100),
-                        php()
-                      ],
-                    )
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
