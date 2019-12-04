@@ -18,3 +18,6 @@ Step 2: enter below command to enable web support,
  `flutter config --enable-web`
  
 Step 3: To run the app choose chrome from device dropdown or run `flutter run -d chrome`
+
+# How Deploy your project on Github?
+Read https://pages.github.com/
