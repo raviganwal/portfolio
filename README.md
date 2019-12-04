@@ -19,7 +19,7 @@ Step 2: enter below command to enable web support,
  
 Step 3: To run the app choose chrome from device dropdown or run `flutter run -d chrome`
 
-# [Building the app for release](https://flutter.dev/docs/deployment/web#building-the-app-for-release)
+# Building the app for release [Read official docs here](https://flutter.dev/docs/deployment/web#building-the-app-for-release)
 Build the app for deployment using the `flutter build web` command. 
 This generates the app, including the assets, and places the files into the /build/web directory of the project.
 
@@ -40,5 +40,11 @@ content_copy
   main.dart.js.map
 ```
 
-# How Deploy your project on Github?
-Read https://pages.github.com/
+# How to [deploy your project on Github?](https://pages.github.com/)
+
+Step 1: Create a new repository named username.github.io, where username is your username (or organization name) on GitHub.
+
+Step 2: Just drop everything inside `/build/web` folder to your repository.
+
+Step 3: Now open your website like https://username.github.io.
+
