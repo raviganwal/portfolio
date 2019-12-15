@@ -2,15 +2,49 @@
 
 Open Source Portfolio flutter app.
 
-## Getting Started
+## Output
+![Portfolio App Demo](sample_output.gif)
 
-This project is a starting point for a Flutter application.
+# Follow below step to successfully run this project after cloing this
+### Read complete guide to enable web support at [get started web](https://flutter.dev/docs/get-started/web)
 
-A few resources to get you started if this is your first Flutter project:
+Step 1: run below command in `terminal` to switch to `dev` channel,
+```
+ flutter channel dev
+ flutter upgrade
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Step 2: enter below command to enable web support,
+ `flutter config --enable-web`
+ 
+Step 3: To run the app choose chrome from device dropdown or run `flutter run -d chrome`
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Building the app for release [read official docs here](https://flutter.dev/docs/deployment/web#building-the-app-for-release)
+Build the app for deployment using the `flutter build web` command. 
+This generates the app, including the assets, and places the files into the /build/web directory of the project.
+
+The release build of a simple app has the following structure:
+```
+content_copy
+/build/web
+  assets
+    AssetManifest.json
+    FontManifest.json
+    LICENSE
+    fonts
+      MaterialIcons-Regular.ttf
+      <other font files>
+    <image files>
+  index.html
+  main.dart.js
+  main.dart.js.map
+```
+
+## How to [deploy your project on Github?](https://pages.github.com/)
+
+Step 1: Create a new repository named username.github.io, where username is your username (or organization name) on GitHub.
+
+Step 2: Just drop everything inside `/build/web` folder to your repository.
+
+Step 3: Now open your website like https://username.github.io.
+
