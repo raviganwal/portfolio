@@ -13,6 +13,13 @@ void main() {
     final ThemeData base =
     ThemeData(brightness: Brightness.dark,
         colorScheme: colorScheme,
+        cardTheme: CardTheme(
+          elevation: 6.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16.0),
+            ),
+          ),),
         iconTheme: IconThemeData(color: Colors.white));
     return base;
   }

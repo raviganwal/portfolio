@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:js' as js;
 
 import 'package:aboutme/NetworkRepository.dart';
+import 'package:aboutme/NetworkUrl.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,15 +15,16 @@ class Portfolio extends StatefulWidget {
 }
 
 class _PortfolioState extends State<Portfolio> {
-  static String projects = "https://raviganwal.github.io/project.json";
-  List<Project> mListAndroid = List();
-  List<Project> mListIos = List();
-  List<Project> mListPhp = List();
+  List<ProjectModel> mListAndroid = List();
+  List<ProjectModel> mListIos = List();
+  List<ProjectModel> mListPhp = List();
 
   @override
   void initState() {
     super.initState();
-    getProjects();
+    getAndroidProjects();
+    getIosProjects();
+    getWebProjects();
   }
 
   @override
@@ -30,7 +32,7 @@ class _PortfolioState extends State<Portfolio> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Portfolio app - Made with flutter"),
+        title: const Text("Portfolio - a Flutter App"),
         centerTitle: true,
       ),
       body: Container(
@@ -47,16 +49,16 @@ class _PortfolioState extends State<Portfolio> {
             SingleChildScrollView(
               child: Center(
                 child: Container(
-                  decoration: new BoxDecoration(
-                    gradient: new LinearGradient(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
                       colors: [Colors.black12, Colors.black26],
                       tileMode: TileMode.clamp,
                     ),
-
                   ),
                   width: 1170,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
 //              decoration: BoxDecoration(
 //                  image: DecorationImage(
 //                    image: AssetImage(
@@ -66,143 +68,28 @@ class _PortfolioState extends State<Portfolio> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      CircleAvatar(
-                        radius: 60.0,
-                        backgroundImage: NetworkImage(
-                            'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 16)),
-                      Text(
-                        Lang.fName + ' ' + Lang.lName,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .title,
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 8)),
-                      Text(
-                        Lang.designation,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .subtitle,
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 16)),
-                      Text(
-                        Lang.contactMe1,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .subtitle,
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 8)),
-                      Text(
-                        Lang.contactMe2,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .title,
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(padding: EdgeInsets.only(top: 16)),
-//              Text(Lang.contactMe3, style: Theme
-//                  .of(context)
-//                  .textTheme
-//                  .title,
-//                textAlign: TextAlign.center,),
-//              RichText(
-//                text: TextSpan(
-//                  text: Lang.contactMe1,
-//                  style: Theme
-//                      .of(context)
-//                      .textTheme
-//                      .title
-//                      .copyWith(
-//                      fontStyle: FontStyle.italic, letterSpacing: 1.0),
-//                  children: <TextSpan>[
-//                    TextSpan(text: Lang.contactMe2,
-//                        style: TextStyle(fontWeight: FontWeight.bold)),
-//                    TextSpan(text: Lang.contactMe3),
-//                  ],
-//                ),
-//              )
-//                  Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      header(),
+                      Column(
                         children: <Widget>[
-                          Icon(FontAwesomeIcons.whatsapp),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          SelectableText(
-                            '+91-8962328415',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .title,
-                          )
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(FontAwesomeIcons.google),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          SelectableText(
-                            'raviganwal1992@gmail.com',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .title,
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                              icon: Icon(FontAwesomeIcons.stackOverflow),
-                              onPressed: () {
-                                js.context.callMethod("open", [
-                                  'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile'
-                                ]);
-                              }),
-                          Container(
-                            height: 16,
-                            width: 1,
-                            color: Colors.grey,
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          const Padding(padding: EdgeInsets.all(16)),
+                          android(),
+                          const Divider(
+                            color: Colors.white54,
+                            thickness: 2,
+                            endIndent: 16,
+                            indent: 16,
+                            height: 100,
                           ),
-                          IconButton(
-                              icon: Icon(FontAwesomeIcons.github),
-                              onPressed: () {
-                                js.context.callMethod(
-                                    "open", ['https://github.com/raviganwal']);
-                              }),
-                        ],
-                      ),
-                      if (mListAndroid != null)
-                        Column(
-                          children: <Widget>[
-                            Padding(padding: EdgeInsets.all(16)),
-                            android(),
-                            Divider(
+                          ios(),
+                          const Divider(
                               color: Colors.white54,
                               thickness: 2,
                               endIndent: 16,
                               indent: 16,
-                              height: 100,
-                            ),
-                            ios(),
-                            Divider(
-                                color: Colors.white54,
-                                thickness: 2,
-                                endIndent: 16,
-                                indent: 16,
-                                height: 100),
-                            php()
-                          ],
-                        )
+                              height: 100),
+                          php()
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -223,18 +110,40 @@ class _PortfolioState extends State<Portfolio> {
     return 1;
   }
 
-  Future<String> getProjects() async {
-    NetworkRepository().getRequest(projects).then((onValue) {
+  Future<String> getAndroidProjects() async {
+    NetworkRepository().getRequest(NetworkUrl.androidProjects).then((onValue) {
       var dataConvertedToJSON = json.decode(onValue);
       setState(() {
-        ProjectModel model = ProjectModel.fromJson(dataConvertedToJSON);
-//        print(model);
-        mListAndroid.addAll(model.androidProject);
-        mListIos.addAll(model.iosProject);
-        mListPhp.addAll(model.phpProject);
-        for (var model in mListAndroid) {
-          print(model.title);
-        }
+        var list = dataConvertedToJSON as List;
+        mListAndroid.addAll(list
+            .map<ProjectModel>((json) => ProjectModel.fromJson(json))
+            .toList());
+      });
+    });
+    return 'success';
+  }
+
+  Future<String> getIosProjects() async {
+    NetworkRepository().getRequest(NetworkUrl.iosProjects).then((onValue) {
+      var dataConvertedToJSON = json.decode(onValue);
+      setState(() {
+        var list = dataConvertedToJSON as List;
+        mListIos.addAll(list
+            .map<ProjectModel>((json) => ProjectModel.fromJson(json))
+            .toList());
+      });
+    });
+    return 'success';
+  }
+
+  Future<String> getWebProjects() async {
+    NetworkRepository().getRequest(NetworkUrl.webProjects).then((onValue) {
+      var dataConvertedToJSON = json.decode(onValue);
+      setState(() {
+        var list = dataConvertedToJSON as List;
+        mListPhp.addAll(list
+            .map<ProjectModel>((json) => ProjectModel.fromJson(json))
+            .toList());
       });
     });
     return 'success';
@@ -242,7 +151,7 @@ class _PortfolioState extends State<Portfolio> {
 
   Widget android() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: <Widget>[
           Row(
@@ -250,53 +159,57 @@ class _PortfolioState extends State<Portfolio> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.android,
                 size: 35,
               ),
-              Padding(padding: EdgeInsets.only(left: 8)),
+              const Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.androidProject,
                 style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
-          Padding(padding: EdgeInsets.only(top: 8)),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: mListAndroid.length,
             itemBuilder: (context, int) {
-              Project model = mListAndroid[int];
+              ProjectModel model = mListAndroid[int];
               return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: InkWell(
-                onTap: () {
-                  js.context.callMethod("open", [model.url]);
-                },
-                child: Row(
-                  children: <Widget>[
-                    FadeInImage.assetNetwork(
-                      height: 100,
-                      width: 100,
-                      placeholder: 'assets/images/loading.gif',
-                      image: '${model.logo}',
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                    Expanded(
-                        child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    onTap: () {
+                      js.context.callMethod("open", [model.url]);
+                    },
+                    child: Row(
                       children: <Widget>[
-                        Text(
-                          '${model.title}',
-                          style: Theme.of(context).textTheme.title,
+                        Image.network(
+                          '${model.logo}',
+                          height: 100,
+                          width: 100,
                         ),
-                        Text('${model.url}',
-                            style: Theme.of(context).textTheme.subtitle),
-                      ],
-                    )),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                    Icon(FontAwesomeIcons.googlePlay),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16)),
+                        Expanded(
+                            child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              '${model.title}',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                            Text('${model.url}',
+                                style: Theme.of(context).textTheme.subtitle),
+                          ],
+                        )),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16)),
+                        const Icon(FontAwesomeIcons.googlePlay),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16)),
 
 //                    ListTile(
 //                      onTap: () {
@@ -307,9 +220,9 @@ class _PortfolioState extends State<Portfolio> {
 //                      subtitle: Text('${model.url}'),
 //                      trailing: ,
 //                    ),
-                  ],
-                ),
-              ));
+                      ],
+                    ),
+                  ));
             },
           )
         ],
@@ -319,44 +232,46 @@ class _PortfolioState extends State<Portfolio> {
 
   Widget ios() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.phone_iphone,
                 size: 35,
               ),
-              Padding(padding: EdgeInsets.only(left: 8)),
+              const Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.iosProject,
                 style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
-          Padding(padding: EdgeInsets.only(top: 8)),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: mListIos.length,
             itemBuilder: (context, int) {
-              Project model = mListIos[int];
+              ProjectModel model = mListIos[int];
               return Card(
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 child: InkWell(
                   onTap: () {
                     js.context.callMethod("open", [model.url]);
                   },
                   child: Row(
                     children: <Widget>[
-                      FadeInImage.assetNetwork(
+                      Image.network(
+                        '${model.logo}',
                         height: 100,
                         width: 100,
-                        placeholder: 'assets/images/loading.gif',
-                        image: '${model.logo}',
                       ),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
                       Expanded(
                           child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -370,9 +285,11 @@ class _PortfolioState extends State<Portfolio> {
                               style: Theme.of(context).textTheme.subtitle),
                         ],
                       )),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                      Icon(FontAwesomeIcons.googlePlay),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
+                      const Icon(FontAwesomeIcons.appStoreIos),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
 
 //                    ListTile(
 //                      onTap: () {
@@ -396,63 +313,66 @@ class _PortfolioState extends State<Portfolio> {
 
   Widget php() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(
+              const Icon(
                 Icons.web,
                 size: 35,
               ),
-              Padding(padding: EdgeInsets.only(left: 8)),
+              const Padding(padding: EdgeInsets.only(left: 8)),
               Text(
                 Lang.web,
                 style: Theme.of(context).textTheme.display1,
               ),
             ],
           ),
-          Padding(padding: EdgeInsets.only(top: 8)),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: mListPhp.length,
             itemBuilder: (context, int) {
-              Project model = mListPhp[int];
+              ProjectModel model = mListPhp[int];
               return Card(
-                  child: InkWell(
-                onTap: () {
-                  js.context.callMethod("open", [model.url]);
-                },
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: FadeInImage.assetNetwork(
+                margin: EdgeInsets.symmetric(vertical: 8),
+                child: InkWell(
+                  onTap: () {
+                    js.context.callMethod("open", [model.url]);
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8)),
+                      Image.network(
+                        '${model.logo}',
                         height: 100,
                         width: 100,
-                        placeholder: 'assets/images/loading.gif',
-                        image: '${model.logo}',
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                    Expanded(
-                        child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '${model.title}',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                        Text('${model.url}',
-                            style: Theme.of(context).textTheme.subtitle),
-                      ],
-                    )),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-                    Icon(FontAwesomeIcons.googlePlay),
-                    Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
+                      Expanded(
+                          child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${model.title}',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                          Text('${model.url}',
+                              style: Theme.of(context).textTheme.subtitle),
+                        ],
+                      )),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
+                      const Icon(FontAwesomeIcons.chrome),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16)),
 
 //                    ListTile(
 //                      onTap: () {
@@ -463,13 +383,96 @@ class _PortfolioState extends State<Portfolio> {
 //                      subtitle: Text('${model.url}'),
 //                      trailing: ,
 //                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ));
+              );
             },
           )
         ],
       ),
+    );
+  }
+
+  Widget header() {
+    return Column(
+      children: <Widget>[
+        const CircleAvatar(
+          radius: 60.0,
+          backgroundImage: NetworkImage(
+              'https://avatars0.githubusercontent.com/u/22388017?s=460&v=4'),
+        ),
+        const Padding(padding: EdgeInsets.only(top: 16)),
+        Text(
+          Lang.fName + ' ' + Lang.lName,
+          style: Theme.of(context).textTheme.title,
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Text(
+          Lang.designation,
+          style: Theme.of(context).textTheme.subtitle,
+        ),
+        const Padding(padding: EdgeInsets.only(top: 16)),
+        Text(
+          Lang.contactMe1,
+          style: Theme.of(context).textTheme.subtitle,
+          textAlign: TextAlign.center,
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Text(
+          Lang.contactMe2,
+          style: Theme.of(context).textTheme.title,
+          textAlign: TextAlign.center,
+        ),
+        const Padding(padding: EdgeInsets.only(top: 16)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(FontAwesomeIcons.whatsapp),
+            const Padding(padding: EdgeInsets.only(left: 8)),
+            SelectableText(
+              '+91-8962328415',
+              style: Theme.of(context).textTheme.title,
+            )
+          ],
+        ),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(FontAwesomeIcons.google),
+            const Padding(padding: EdgeInsets.only(left: 8)),
+            SelectableText(
+              'raviganwal1992@gmail.com',
+              style: Theme.of(context).textTheme.title,
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+                icon: const Icon(FontAwesomeIcons.stackOverflow),
+                onPressed: () {
+                  js.context.callMethod("open", [
+                    'https://stackoverflow.com/users/5734205/ravinder-kumar?tab=profile'
+                  ]);
+                }),
+            Container(
+              height: 16,
+              width: 1,
+              color: Colors.grey,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+            IconButton(
+                icon: const Icon(FontAwesomeIcons.github),
+                onPressed: () {
+                  js.context
+                      .callMethod("open", ['https://github.com/raviganwal']);
+                }),
+          ],
+        ),
+      ],
     );
   }
 }
