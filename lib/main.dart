@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'Portfolio.dart';
+import 'portfolio.dart';
 
 void main() {
   ThemeData _buildDarkTheme() {
     final Color primaryColor = Color(0xff121212);
     final Color secondaryColor = Colors.pink;
     final ColorScheme colorScheme = const ColorScheme.light().copyWith(
+      brightness: Brightness.dark,
       primary: primaryColor,
       secondary: secondaryColor,
     );
